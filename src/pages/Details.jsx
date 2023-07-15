@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import React from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import Card from "../components/Card";
+
 function Details() {
   const { id } = useParams();
   const [data, setData] = useState([]);
@@ -17,16 +19,14 @@ function Details() {
   // API End
   return (
     <>
-      <h1>Details</h1>
-      <h5>ID Is: {id}</h5>
+      <h1>Products of a Category</h1>
+      <h5>Here Category ID Is: {id}</h5>
       {data.map((product) => (
-        <>
-          <p>
-            {product.title}
-            <img width={50} src={product.images} alt="" />
-            <span className="badge bg-success">{product.price}</span>
-          </p>
-        </>
+          <div className="container">
+            <div className="row">
+              <Card id={product.id} name={product.title} image={product.images} />    
+            </div>
+          </div>
       ))}
     </>
   );
