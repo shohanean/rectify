@@ -5,6 +5,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Details from "./pages/Details";
+import AddProduct from "./pages/AddProduct";
 import {
   createRoutesFromElements,
   createBrowserRouter,
@@ -16,9 +17,10 @@ const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Master />}>
-        <Route path="/" element={<Index />} /> 
+        <Route path="/" element={<Index />} />
         <Route path="details/:id" element={<Details />} />
         <Route path="/about" element={<About />} />
+        <Route path="/add-product" element={<AddProduct />} />
         <Route path="/contact" element={<Contact />} />
       </Route>
     )
