@@ -21,13 +21,13 @@ function Details() {
     <>
       <h1>Products of a Category</h1>
       <h5>Here Category ID Is: {id}</h5>
-      {data.map((product) => (
-          <div className="container">
-            <div className="row">
-              <Card id={product.id} name={product.title} image={product.images} />    
-            </div>
-          </div>
-      ))}
+      <div className="container">
+        <div className="row">
+          {data.map((product) => (
+            <Card id={product.id} name={product.title} image={product.images} />
+          ))}
+        </div>
+      </div>
     </>
   );
 }

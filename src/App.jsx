@@ -6,6 +6,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Details from "./pages/Details";
 import AddProduct from "./pages/AddProduct";
+import NotFound from "./pages/errors/NotFound";
 import {
   createRoutesFromElements,
   createBrowserRouter,
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     )
   );

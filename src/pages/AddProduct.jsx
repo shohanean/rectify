@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const AddProduct = () => {
+  const [error, setError] = useState("");
   const [inputs, setInputs] = useState({
-    productName: "",
-    productPrice: "",
+    title: "",
+    price: "",
+    description: "",
+    categoryId: 1,
+    images: ["https://fastly.picsum.photos/id/588/640/640.jpg"],
   });
   const handleChange = (event) => {
     setInputs({
@@ -13,32 +18,80 @@ const AddProduct = () => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert("Product Name: " + inputs.productName);
-    alert("Product Price: " + inputs.productPrice);
+    axios
+      .post("https://api.escuelajs.co/api/v1/products/", inputs)
+      .then(function (response) {
+        console.log(response);
+      });
+    alert("Product Added Successfully!");
   };
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label>Product Name</label>
-        <input
-          type="text"
-          name="productName"
-          value={inputs.productName}
-          placeholder="Product Name"
-          onChange={handleChange}
-        />
-        <label>Product Price</label>
-        <input
-          type="number"
-          name="productPrice"
-          value={inputs.productPrice}
-          placeholder="Product Price"
-          onChange={handleChange}
-        />
-        <button type="submit">Add New Product</button>
+        <div className="row">
+          <div className="form-group col-4">
+            <label>categoryId</label>
+            <select
+              name="categoryId"
+              className="form-control"
+              onChange={handleChange}
+            >
+              <option value="">-Select One Category-</option>
+              <option value="1">Rohit</option>
+              <option value="2">Electronics</option>
+              <option value="3">Furniture</option>
+            </select>
+            <small className="text-danger">{error}</small>
+          </div>
+          <div className="form-group col-4">
+            <label>Title</label>
+            <input
+              className="form-control"
+              type="text"
+              name="title"
+              value={inputs.title}
+              placeholder="Title"
+              onChange={handleChange}
+            />
+            <small className="text-danger">{error}</small>
+          </div>
+          <div className="form-group col-4">
+            <label>Price</label>
+            <input
+              className="form-control"
+              type="number"
+              name="price"
+              value={inputs.price}
+              placeholder="Price"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group col-12">
+            <label>Description</label>
+            <textarea
+              className="form-control"
+              rows="2"
+              name="description"
+              placeholder="Description Here"
+              onChange={handleChange}
+              value={inputs.description}
+            ></textarea>
+          </div>
+          <div className="form-group col-4">
+            <label>&nbsp;</label>
+            <button className="form-control btn btn-info" type="submit">
+              Add New Product
+            </button>
+          </div>
+        </div>
       </form>
-      <p>Product Name: {inputs.productName}</p>
-      <p>Product Price: {inputs.productPrice}</p>
+      <div className="card mt-4">
+        <div className="card-header">Output</div>
+        <div className="card-body">
+          <p>Product Name: {inputs.productName}</p>
+          <p>Product Price: {inputs.productPrice}</p>
+        </div>
+      </div>
     </>
   );
 };
