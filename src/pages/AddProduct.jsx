@@ -1,8 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const AddProduct = () => {
-  const [error, setError] = useState("");
+  const [categories, setcategories] = useState([]);
+  const categoriesFromApi = async () => {
+    await axios
+      .get("https://api.escuelajs.co/api/v1/categories")
+      .then((response) => setcategories(response.data));
+  };
+  useEffect(() => {
+    categoriesFromApi();
+  }, []);
+
   const [inputs, setInputs] = useState({
     title: "",
     price: "",
@@ -13,11 +22,12 @@ const AddProduct = () => {
   const handleChange = (event) => {
     setInputs({
       ...inputs,
-      [event.target.name]: event.target.value,
+      [event.target.name]: [event.target.value],
     });
   };
   const handleSubmit = (event) => {
     event.preventDefault();
+
     axios
       .post("https://api.escuelajs.co/api/v1/products/", inputs)
       .then(function (response) {
@@ -37,11 +47,13 @@ const AddProduct = () => {
               onChange={handleChange}
             >
               <option value="">-Select One Category-</option>
-              <option value="1">Rohit</option>
+              {categories.map((category) => (
+                <option value={category.id}>{category.name}</option>
+              ))}
+
               <option value="2">Electronics</option>
               <option value="3">Furniture</option>
             </select>
-            <small className="text-danger">{error}</small>
           </div>
           <div className="form-group col-4">
             <label>Title</label>
@@ -53,7 +65,6 @@ const AddProduct = () => {
               placeholder="Title"
               onChange={handleChange}
             />
-            <small className="text-danger">{error}</small>
           </div>
           <div className="form-group col-4">
             <label>Price</label>
